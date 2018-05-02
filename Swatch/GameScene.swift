@@ -3,14 +3,7 @@ import GameplayKit
 
 class GameScene: SKScene {
     var grid:GridNode
-    var selectedSquare:ColorSquareNode? = nil {
-        willSet(newSquare) {
-            selectedSquare?.selected = false
-        }
-        didSet {
-            selectedSquare?.selected = true
-        }
-    }
+    var selectedSquare:ColorSquareNode? = nil
     
     override init(size:CGSize) {
         let rows = min(10, Int(size.height / ColorSquareNode.squareSize.height))
@@ -32,31 +25,22 @@ class GameScene: SKScene {
     }
     
     func touchDown(atPoint pos : CGPoint) {
-        if let newSquare = grid.getSquare(atPos:convert(pos, to: grid)) {
-            if let oldSquare = selectedSquare {
-                if newSquare.isNeighbor(ofSquare: oldSquare) {
-                    selectedSquare = nil
-                    grid.combineSquares(oldSquare, newSquare)
-                }
-                else {
-                    selectedSquare = newSquare
-                }
-            }
-            else {
-                selectedSquare = newSquare
-            }
-        }
-        else {
-            selectedSquare = nil
-        }
+        selectedSquare = grid.getSquare(atPos:convert(pos, to: grid))
     }
     
     func touchMoved(toPoint pos : CGPoint) {
-
+        if let newSquare = grid.getSquare(atPos:convert(pos, to: grid)) {
+            if let oldSquare = selectedSquare {
+                if (newSquare.isNeighbor(ofSquare: oldSquare)) {
+                    selectedSquare = nil
+                    grid.combineSquares(oldSquare, newSquare)
+                }
+            }
+        }
     }
     
     func touchUp(atPoint pos : CGPoint) {
-
+        selectedSquare = nil
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

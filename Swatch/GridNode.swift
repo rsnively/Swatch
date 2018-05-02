@@ -66,6 +66,7 @@ class GridNode: SKNode {
         case Direction.up:
             for r in stride(from:removedRow, to:0, by:-1){
                 colorSquares[r][removedCol] = colorSquares[r-1][removedCol]
+                if colorSquares[r][removedCol] == nil { return }
                 colorSquares[r][removedCol]?.row = r
                 colorSquares[r][removedCol]?.slideUp()
             }
@@ -73,6 +74,7 @@ class GridNode: SKNode {
         case Direction.down:
             for r in removedRow ..< rows - 1 {
                 colorSquares[r][removedCol] = colorSquares[r+1][removedCol]
+                if colorSquares[r][removedCol] == nil { return }
                 colorSquares[r][removedCol]?.row = r
                 colorSquares[r][removedCol]?.slideDown()
             }
@@ -80,6 +82,7 @@ class GridNode: SKNode {
         case Direction.right:
             for c in stride(from:removedCol, to:0, by:-1){
                 colorSquares[removedRow][c] = colorSquares[removedRow][c-1]
+                if colorSquares[removedRow][c] == nil { return }
                 colorSquares[removedRow][c]?.col = c
                 colorSquares[removedRow][c]?.slideRight()
             }
@@ -87,6 +90,7 @@ class GridNode: SKNode {
         case Direction.left:
             for c in removedCol ..< cols - 1 {
                 colorSquares[removedRow][c] = colorSquares[removedRow][c+1]
+                if colorSquares[removedRow][c] == nil { return }
                 colorSquares[removedRow][c]?.col = c
                 colorSquares[removedRow][c]?.slideLeft()
             }
@@ -103,19 +107,19 @@ class GridNode: SKNode {
         let (br, bc) = getGridPosition(point:b.position)
         // a on top of b
         if ar == br + 1 {
-            removeSquare(a, shift:Direction.up)
+            removeSquare(b, shift:Direction.down)
         }
         // a below b
         else if ar == br - 1 {
-            removeSquare(a, shift:Direction.down)
+            removeSquare(b, shift:Direction.up)
         }
         // a to right of b
         if ac == bc + 1 {
-            removeSquare(a, shift:Direction.right)
+            removeSquare(b, shift:Direction.left)
         }
         // a to left of b
         else if ac == bc - 1 {
-            removeSquare(a, shift:Direction.left)
+            removeSquare(b, shift:Direction.right)
         }
     }
 }

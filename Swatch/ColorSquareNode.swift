@@ -5,21 +5,8 @@ class ColorSquareNode: SKSpriteNode {
     static let squareSize = CGSize(width:75, height:75)
     var row:Int
     var col:Int
-    var selected = false {
-        didSet {
-            if selected {
-                let duration = 0.5
-                run(SKAction.repeatForever(SKAction.sequence([SKAction.fadeOut(withDuration:duration), SKAction.fadeIn(withDuration:duration)])))
-            }
-            else {
-                removeAllActions()
-                alpha = 1.0
-            }
-        }
-    }
     
     private var slideDuration = 0.5
-
     
     init(row:Int, col:Int, color:UIColor) {
         self.row = row
