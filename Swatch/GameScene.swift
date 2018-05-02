@@ -21,18 +21,8 @@ class GameScene: SKScene {
     }
     
     func mix(a:ColorSquareNode, b:ColorSquareNode) {
-        var ar:CGFloat = 0
-        var ag:CGFloat = 0
-        var ab:CGFloat = 0
-        var aa:CGFloat = 0
-        a.color.getRed(&ar, green:&ag, blue:&ab, alpha:&aa)
-        var br:CGFloat = 0
-        var bg:CGFloat = 0
-        var bb:CGFloat = 0
-        var ba:CGFloat = 0
-        assert(b.color.getRed(&br, green:&bg, blue:&bb, alpha:&ba))
-        let color = UIColor(red:(ar + br)/2.0, green:(ag + bg)/2.0, blue:(ab + bb)/2.0, alpha:(aa + ba)/2.0)
-//        let color = UIColor(red:min(ar+br, 1.0), green:min(ag+bg, 1.0), blue:min(ab+bb, 1.0), alpha:min(aa+ba, 1.0))
+        let color = UIColor(red:(a.color.r + b.color.r)/2.0, green:(a.color.g + b.color.g)/2.0, blue:(a.color.b + b.color.b)/2.0, alpha:(a.color.a + b.color.a)/2.0)
+//        let color = UIColor(red:min(a.color.r+b.color.r, 1.0), green:min(a.color.g+b.color.g, 1.0), blue:min(a.color.b+b.color.b, 1.0), alpha:min(a.color.a+b.color.a, 1.0))
         a.color = color
         b.color = color
         

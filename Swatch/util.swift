@@ -56,4 +56,33 @@ extension UIColor {
         assert(self.getRed(&r, green:&g, blue:&b, alpha:&a))
         return r == 1.0 && g == 1.0 && b == 1.0
     }
+    
+    var r:CGFloat {
+        get {
+            var red:CGFloat = 0
+            assert(self.getRed(&red, green:nil, blue:nil, alpha:nil))
+            return red
+        }
+    }
+    var g:CGFloat {
+        get {
+            var green:CGFloat = 0
+            assert(self.getRed(nil, green:&green, blue:nil, alpha:nil))
+            return green
+        }
+    }
+    var b:CGFloat {
+        get {
+            var blue:CGFloat = 0
+            assert(self.getRed(nil, green:nil, blue:&blue, alpha:nil))
+            return blue
+        }
+    }
+    var a:CGFloat {
+        get {
+            var alpha:CGFloat = 0
+            assert(self.getRed(nil, green:nil, blue:nil, alpha:&alpha))
+            return alpha
+        }
+    }
 }
