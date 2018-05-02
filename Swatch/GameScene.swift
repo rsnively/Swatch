@@ -6,8 +6,9 @@ class GameScene: SKScene {
     var selectedSquare:ColorSquareNode? = nil
     
     override init(size:CGSize) {
-        let rows = min(10, Int(size.height / ColorSquareNode.squareSize.height))
-        let cols = min(10, Int(size.width / ColorSquareNode.squareSize.width))
+        let rows = Int(size.height / ColorSquareNode.squareSize.height)
+        let cols = Int(size.width / ColorSquareNode.squareSize.width)
+        ColorSquareNode.squareSize = CGSize(width: size.width / CGFloat(cols), height:size.height / CGFloat(rows))
         grid = GridNode(numRows:rows, numCols:cols)
         super.init(size:size)
     }

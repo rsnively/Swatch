@@ -2,7 +2,7 @@ import Foundation
 import SpriteKit
 
 class ColorSquareNode: SKSpriteNode {
-    static let squareSize = CGSize(width:75, height:75)
+    static var squareSize = CGSize(width:75, height:75)
     var row:Int
     var col:Int
     
