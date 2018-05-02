@@ -3,6 +3,8 @@ import SpriteKit
 
 class ColorSquareNode: SKSpriteNode {
     static let squareSize = CGSize(width:75, height:75)
+    var row:Int
+    var col:Int
     var selected = false {
         didSet {
             if selected {
@@ -16,7 +18,12 @@ class ColorSquareNode: SKSpriteNode {
         }
     }
     
-    init(color:UIColor) {
+    private var slideDuration = 0.5
+
+    
+    init(row:Int, col:Int, color:UIColor) {
+        self.row = row
+        self.col = col
         super.init(texture:nil, color:color, size:ColorSquareNode.squareSize)
     }
     
@@ -25,6 +32,26 @@ class ColorSquareNode: SKSpriteNode {
     }
     
     func isNeighbor(ofSquare other:ColorSquareNode) -> Bool {
-        return other != self && (other.position - self.position).length() <= ColorSquareNode.squareSize.width
+        return other != self && abs(other.row - row) <= 1 && abs(other.col - col) <= 1
+    }
+    
+    func changeColor(to color:UIColor) {
+        run(SKAction.colorize(with:color, colorBlendFactor:1.0, duration:slideDuration/2.0))
+    }
+    
+    func slideUp() {
+        run(SKAction.moveBy(x:0, y:ColorSquareNode.squareSize.height, duration:slideDuration))
+    }
+    
+    func slideDown() {
+        run(SKAction.moveBy(x:0, y:-ColorSquareNode.squareSize.height, duration:slideDuration))
+    }
+    
+    func slideLeft() {
+        run(SKAction.moveBy(x:-ColorSquareNode.squareSize.width, y:0, duration:slideDuration))
+    }
+    
+    func slideRight() {
+        run(SKAction.moveBy(x:ColorSquareNode.squareSize.width, y:0, duration:slideDuration))
     }
 }

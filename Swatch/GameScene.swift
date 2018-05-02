@@ -31,25 +31,12 @@ class GameScene: SKScene {
         addChild(grid)
     }
     
-    func mix(a:ColorSquareNode, b:ColorSquareNode) {
-        let color = UIColor(red:(a.color.r + b.color.r)/2.0, green:(a.color.g + b.color.g)/2.0, blue:(a.color.b + b.color.b)/2.0, alpha:(a.color.a + b.color.a)/2.0)
-//        let color = UIColor(red:min(a.color.r+b.color.r, 1.0), green:min(a.color.g+b.color.g, 1.0), blue:min(a.color.b+b.color.b, 1.0), alpha:min(a.color.a+b.color.a, 1.0))
-        a.color = color
-        b.color = color
-        
-        if color.isWhite() {
-            selectedSquare = nil
-            grid.removeSquare(a)
-            grid.removeSquare(b)
-        }
-    }
-    
     func touchDown(atPoint pos : CGPoint) {
-        if let newSquare = grid.getSquare(atPoint:convert(pos, to: grid)) {
+        if let newSquare = grid.getSquare(atPos:convert(pos, to: grid)) {
             if let oldSquare = selectedSquare {
                 if newSquare.isNeighbor(ofSquare: oldSquare) {
-                    mix(a:oldSquare, b:newSquare)
                     selectedSquare = nil
+                    grid.combineSquares(oldSquare, newSquare)
                 }
                 else {
                     selectedSquare = newSquare
