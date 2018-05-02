@@ -2,7 +2,7 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
-    var grid = GridNode(numRows:10, numCols:10)
+    var grid:GridNode
     var selectedSquare:ColorSquareNode? = nil {
         willSet(newSquare) {
             selectedSquare?.selected = false
@@ -10,6 +10,17 @@ class GameScene: SKScene {
         didSet {
             selectedSquare?.selected = true
         }
+    }
+    
+    override init(size:CGSize) {
+        let rows = min(10, Int(size.height / ColorSquareNode.squareSize.height))
+        let cols = min(10, Int(size.width / ColorSquareNode.squareSize.width))
+        grid = GridNode(numRows:rows, numCols:cols)
+        super.init(size:size)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func didMove(to view: SKView) {
