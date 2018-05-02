@@ -32,7 +32,9 @@ class ColorSquareNode: SKSpriteNode {
     }
     
     func isNeighbor(ofSquare other:ColorSquareNode) -> Bool {
-        return other != self && abs(other.row - row) <= 1 && abs(other.col - col) <= 1
+        let rowDiff = abs(other.row - row)
+        let colDiff = abs(other.col - col)
+        return rowDiff + colDiff == 1
     }
     
     func changeColor(to color:UIColor) {
