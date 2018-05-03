@@ -3,13 +3,15 @@ import GameplayKit
 
 class GameScene: SKScene {
     var grid:GridNode
+    var statusBar:StatusBarNode
     var selectedSquare:ColorSquareNode? = nil
     
     override init(size:CGSize) {
         let rows = Int(size.height / ColorSquareNode.squareSize.height)
         let cols = Int(size.width / ColorSquareNode.squareSize.width)
         ColorSquareNode.squareSize = CGSize(width: size.width / CGFloat(cols), height:size.height / CGFloat(rows))
-        grid = GridNode(numRows:rows, numCols:cols)
+        grid = GridNode(numRows:rows-1, numCols:cols)
+        statusBar = StatusBarNode(size:CGSize(width:size.width, height:ColorSquareNode.squareSize.height))
         super.init(size:size)
     }
     
@@ -21,8 +23,11 @@ class GameScene: SKScene {
         backgroundColor = UIColor.white
         
         grid.position = CGPoint(x:(size.width - ColorSquareNode.squareSize.width * CGFloat(grid.cols)) / 2.0 + ColorSquareNode.squareSize.width / 2.0,
-                                y:(size.height - ColorSquareNode.squareSize.height * CGFloat(grid.rows)) / 2.0 + ColorSquareNode.squareSize.height / 2.0)
+                                y:(size.height - ColorSquareNode.squareSize.height * CGFloat(grid.rows)) / 2.0)
         addChild(grid)
+        
+        statusBar.position = CGPoint(x:size.width / 2.0, y:size.height - ColorSquareNode.squareSize.height / 2.0)
+        addChild(statusBar)
     }
     
     func touchDown(atPoint pos : CGPoint) {

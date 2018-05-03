@@ -55,7 +55,7 @@ class GridNode: SKNode {
     
     func getSquare(atPos pos:CGPoint) -> ColorSquareNode? {
         let (r, c) = getGridPosition(point:pos)
-        return (0 ..< rows).contains(r) && (0 ..< cols).contains(c) ? colorSquares[r][c] : nil
+        return (0 ..< rows).contains(r) && (0 ..< cols).contains(c) && colorSquares[r][c] != nil && !colorSquares[r][c]!.color.isWhite() ? colorSquares[r][c] : nil
     }
     
     func removeSquare(_ square:ColorSquareNode, shift:Direction) {
@@ -66,7 +66,7 @@ class GridNode: SKNode {
         case Direction.up:
             for r in stride(from:removedRow, to:0, by:-1){
                 colorSquares[r][removedCol] = colorSquares[r-1][removedCol]
-                if colorSquares[r][removedCol] == nil { return }
+                if colorSquares[r][removedCol] == nil || colorSquares[r][removedCol]!.color.isWhite() { return }
                 colorSquares[r][removedCol]?.row = r
                 colorSquares[r][removedCol]?.slideUp()
             }
@@ -74,7 +74,7 @@ class GridNode: SKNode {
         case Direction.down:
             for r in removedRow ..< rows - 1 {
                 colorSquares[r][removedCol] = colorSquares[r+1][removedCol]
-                if colorSquares[r][removedCol] == nil { return }
+                if colorSquares[r][removedCol] == nil || colorSquares[r][removedCol]!.color.isWhite() { return }
                 colorSquares[r][removedCol]?.row = r
                 colorSquares[r][removedCol]?.slideDown()
             }
@@ -82,7 +82,7 @@ class GridNode: SKNode {
         case Direction.right:
             for c in stride(from:removedCol, to:0, by:-1){
                 colorSquares[removedRow][c] = colorSquares[removedRow][c-1]
-                if colorSquares[removedRow][c] == nil { return }
+                if colorSquares[removedRow][c] == nil || colorSquares[removedRow][c]!.color.isWhite() { return }
                 colorSquares[removedRow][c]?.col = c
                 colorSquares[removedRow][c]?.slideRight()
             }
@@ -90,7 +90,7 @@ class GridNode: SKNode {
         case Direction.left:
             for c in removedCol ..< cols - 1 {
                 colorSquares[removedRow][c] = colorSquares[removedRow][c+1]
-                if colorSquares[removedRow][c] == nil { return }
+                if colorSquares[removedRow][c] == nil || colorSquares[removedRow][c]!.color.isWhite() { return }
                 colorSquares[removedRow][c]?.col = c
                 colorSquares[removedRow][c]?.slideLeft()
             }
@@ -99,7 +99,8 @@ class GridNode: SKNode {
     }
     
     func combineSquares(_ a:ColorSquareNode, _ b:ColorSquareNode) {
-        let color = UIColor(red:(a.color.r + b.color.r)/2.0, green:(a.color.g + b.color.g)/2.0, blue:(a.color.b + b.color.b)/2.0, alpha:(a.color.a + b.color.a)/2.0)
+//        let color = UIColor(red:(a.color.r + b.color.r)/2.0, green:(a.color.g + b.color.g)/2.0, blue:(a.color.b + b.color.b)/2.0, alpha:(a.color.a + b.color.a)/2.0)
+        let color = UIColor(red:min(1.0, a.color.r + b.color.r), green:min(1.0, a.color.g + b.color.g), blue:min(1.0, a.color.b + b.color.b), alpha:min(1.0, a.color.a + b.color.a))
         a.changeColor(to:color)
         b.changeColor(to:color)
         

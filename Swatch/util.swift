@@ -49,12 +49,7 @@ extension SKNode {
 
 extension UIColor {
     func isWhite() -> Bool {
-        var r:CGFloat = 0
-        var g:CGFloat = 0
-        var b:CGFloat = 0
-        var a:CGFloat = 0
-        assert(self.getRed(&r, green:&g, blue:&b, alpha:&a))
-        return r == 1.0 && g == 1.0 && b == 1.0
+        return r >= 0.99 && g >= 0.99 && b >= 0.99
     }
     
     var r:CGFloat {

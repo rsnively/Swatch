@@ -25,7 +25,13 @@ class ColorSquareNode: SKSpriteNode {
     }
     
     func changeColor(to color:UIColor) {
-        run(SKAction.colorize(with:color, colorBlendFactor:1.0, duration:slideDuration/2.0))
+        run(SKAction.sequence([
+            SKAction.colorize(with:color, colorBlendFactor:1.0, duration:slideDuration/2.0),
+            SKAction.run{
+                if self.color.isWhite() {
+                    self.color = UIColor.white
+                }
+            }]));
     }
     
     func slideUp() {
