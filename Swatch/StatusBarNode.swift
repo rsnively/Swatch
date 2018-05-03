@@ -24,6 +24,10 @@ class ColorBarNode: SKNode {
     func deplete(by percent:CGFloat) {
         colorNode.size.width = max(0.0, colorNode.size.width - maxSize.width * percent / 100.0)
     }
+    
+    func fill(by percent:CGFloat) {
+        colorNode.size.width = min(maxSize.width, colorNode.size.width + maxSize.width * percent / 100.0)
+    }
 }
 
 class StatusBarNode: SKNode {
@@ -54,5 +58,12 @@ class StatusBarNode: SKNode {
         redBar.deplete(by:percent)
         greenBar.deplete(by:percent)
         blueBar.deplete(by:percent)
+    }
+    
+    func refill(color:UIColor) {
+        let fillFactor:CGFloat = 1.5
+        redBar.fill(by: color.r * fillFactor)
+        greenBar.fill(by: color.g * fillFactor)
+        blueBar.fill(by: color.b * fillFactor)
     }
 }

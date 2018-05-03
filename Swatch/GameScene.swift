@@ -40,7 +40,7 @@ class GameScene: SKScene {
             if let oldSquare = selectedSquare {
                 if (newSquare.isNeighbor(ofSquare: oldSquare)) {
                     selectedSquare = nil
-                    grid.combineSquares(oldSquare, newSquare)
+                    statusBar.refill(color: grid.combineSquares(oldSquare, newSquare))
                 }
             }
         }

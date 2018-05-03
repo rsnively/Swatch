@@ -98,7 +98,7 @@ class GridNode: SKNode {
         }
     }
     
-    func combineSquares(_ a:ColorSquareNode, _ b:ColorSquareNode) {
+    func combineSquares(_ a:ColorSquareNode, _ b:ColorSquareNode) -> UIColor {
 //        let color = UIColor(red:(a.color.r + b.color.r)/2.0, green:(a.color.g + b.color.g)/2.0, blue:(a.color.b + b.color.b)/2.0, alpha:(a.color.a + b.color.a)/2.0)
         let color = UIColor(red:min(1.0, a.color.r + b.color.r), green:min(1.0, a.color.g + b.color.g), blue:min(1.0, a.color.b + b.color.b), alpha:min(1.0, a.color.a + b.color.a))
         a.changeColor(to:color)
@@ -122,5 +122,6 @@ class GridNode: SKNode {
         else if ac == bc - 1 {
             removeSquare(b, shift:Direction.right)
         }
+        return color
     }
 }
