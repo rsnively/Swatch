@@ -3,8 +3,10 @@ import SpriteKit
 
 class ColorBarNode: SKNode {
     var colorNode:SKSpriteNode
+    var maxSize:CGSize
     
     init(color:UIColor, size:CGSize) {
+        maxSize = size
         colorNode = SKSpriteNode(texture:nil, color:color, size:size)
         super.init()
         addChild(colorNode)
@@ -17,6 +19,10 @@ class ColorBarNode: SKNode {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func deplete(by percent:CGFloat) {
+        colorNode.size.width = max(0.0, colorNode.size.width - maxSize.width * percent / 100.0)
     }
 }
 
@@ -42,5 +48,11 @@ class StatusBarNode: SKNode {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func depleteColors(percent:CGFloat) {
+        redBar.deplete(by:percent)
+        greenBar.deplete(by:percent)
+        blueBar.deplete(by:percent)
     }
 }

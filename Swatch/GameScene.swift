@@ -28,6 +28,7 @@ class GameScene: SKScene {
         
         statusBar.position = CGPoint(x:size.width / 2.0, y:size.height - ColorSquareNode.squareSize.height / 2.0)
         addChild(statusBar)
+        run(SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration:0.05), SKAction.run { self.statusBar.depleteColors(percent:0.1) }])))
     }
     
     func touchDown(atPoint pos : CGPoint) {
